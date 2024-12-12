@@ -1,12 +1,18 @@
 import streamlit as st
 from google.cloud import firestore
+import firebase_admin
 
 # Authenticate to Firestore with the JSON account key.
 fb_credentials = st.secrets["firebase"]['my_project_settings']
 print(type(fb_credentials))
 fb_credentials_dict = fb_credentials.to_dict()
 print(type(fb_credentials_dict))
-db = firestore.Client.from_service_account_json(fb_credentials_dict)
+
+cred = firebase_admin.credentials.Certificate(fb_credentials_dict)
+fireApp = firebase_admin.initialize_app(cred)
+db = firebase_admin.firestore.client()
+
+# db = firestore.Client.from_service_account_json(fb_credentials_dict)
 
 if st.button("Refresh Now"):
     st.rerun()

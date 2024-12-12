@@ -14,7 +14,7 @@ if not firebase_admin._apps:
     cred = firebase_admin.credentials.Certificate(fb_credentials_dict)
     firebase_admin.initialize_app(cred)
 
-@st.experimental_singleton
+@st.cache_resource
 def get_db():
     db = firebase_admin.firestore.client()
     return db

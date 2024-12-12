@@ -9,14 +9,14 @@ print(fb_credentials)
 fb_credentials_dict = dict(fb_credentials)
 print(type(fb_credentials_dict))
 
-if not firebase_admin._apps:
-    # key = json.loads(fb_credentials)
-    cred = firebase_admin.credentials.Certificate(fb_credentials_dict)
-    firebase_admin.initialize_app(cred)
+# if not firebase_admin._apps:
+#     # key = json.loads(fb_credentials)
+#     cred = firebase_admin.credentials.Certificate(fb_credentials_dict)
+#     firebase_admin.initialize_app(cred)
 
 @st.cache_resource
 def get_db():
-    key = json.loads(fb_credentials)
+    key = json.loads(fb_credentials_dict)
     cred = firebase_admin.credentials.Certificate(key)
     try:
         firebase_admin.get_app()
@@ -47,6 +47,7 @@ if st.button("Refresh Now"):
 #     })
 
 db = get_db()
+
 # Create a reference to the Google post.
 doc_ref = db.collection("IOT").document("PackageName")
 

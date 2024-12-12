@@ -2,7 +2,8 @@ import streamlit as st
 from google.cloud import firestore
 
 # Authenticate to Firestore with the JSON account key.
-db = firestore.Client.from_service_account_json("./iot-final-project.json")
+fb_credentials = st.secrets["firebase"]['my_project_settings']
+db = firestore.Client.from_service_account_json(fb_credentials)
 
 if st.button("Refresh Now"):
     st.rerun()

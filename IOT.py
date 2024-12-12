@@ -16,7 +16,7 @@ if not firebase_admin._apps:
 
 @st.cache_resource
 def get_db():
-    db = firebase_admin.firestore.client()
+    db = firestore.Client(credentials=cred, project="iot-final-project-b1550")
     return db
 
 

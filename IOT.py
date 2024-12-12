@@ -1,7 +1,6 @@
 import firebase_admin.firestore
 import streamlit as st
 from google.cloud import firestore
-import firebase_admin
 
 # Authenticate to Firestore with the JSON account key.
 fb_credentials = st.secrets["firebase"]['my_project_settings']
@@ -12,7 +11,12 @@ print(type(fb_credentials_dict))
 if not firebase_admin._apps:
     cred = firebase_admin.credentials.Certificate(fb_credentials_dict)
     firebase_admin.initialize_app(cred)
-db = firebase_admin.firestore.client()
+
+@st.experimental_singleton
+def get_db():
+    db = firebase_admin.firestore.client()
+    return db
+
 
 # db = firestore.Client.from_service_account_json(fb_credentials_dict)
 
@@ -33,6 +37,7 @@ if st.button("Refresh Now"):
 #         "Package No.1": 1,
 #     })
 
+db = get_db()
 # Create a reference to the Google post.
 doc_ref = db.collection("IOT").document("PackageName")
 

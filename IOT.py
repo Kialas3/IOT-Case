@@ -3,7 +3,9 @@ from google.cloud import firestore
 
 # Authenticate to Firestore with the JSON account key.
 fb_credentials = st.secrets["firebase"]['my_project_settings']
-fb_credentials_dict = dict(fb_credentials)
+print(type(fb_credentials))
+fb_credentials_dict = fb_credentials.to_dict()
+print(type(fb_credentials_dict))
 db = firestore.Client.from_service_account_json(fb_credentials_dict)
 
 if st.button("Refresh Now"):

@@ -16,7 +16,14 @@ if not firebase_admin._apps:
 
 @st.cache_resource
 def get_db():
-    db = firestore.Client(credentials=cred, project="iot-final-project-b1550")
+    key = json.loads(fb_credentials)
+    cred = firebase_admin.credentials.Certificate(key)
+    try:
+        firebase_admin.get_app()
+    except ValueError:
+        firebase_admin.initialize_app(cred)
+        
+    db = firebase_admin.firestore.client()
     return db
 
 

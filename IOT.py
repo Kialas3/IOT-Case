@@ -1,3 +1,4 @@
+import firebase_admin.firestore
 import streamlit as st
 from google.cloud import firestore
 import firebase_admin

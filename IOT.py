@@ -9,7 +9,7 @@ fb_credentials_dict = fb_credentials.to_dict()
 print(type(fb_credentials_dict))
 
 cred = firebase_admin.credentials.Certificate(fb_credentials_dict)
-fireApp = firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred)
 db = firebase_admin.firestore.client()
 
 # db = firestore.Client.from_service_account_json(fb_credentials_dict)

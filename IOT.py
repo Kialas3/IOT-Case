@@ -4,7 +4,7 @@ import firebase_admin
 
 # Authenticate to Firestore with the JSON account key.
 fb_credentials = st.secrets["firebase"]['my_project_settings']
-print(type(fb_credentials))
+print(fb_credentials)
 fb_credentials_dict = dict(fb_credentials)
 print(type(fb_credentials_dict))
 

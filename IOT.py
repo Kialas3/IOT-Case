@@ -1,6 +1,7 @@
 import firebase_admin.firestore
 import streamlit as st
 from google.cloud import firestore
+import json
 
 # Authenticate to Firestore with the JSON account key.
 fb_credentials = st.secrets["firebase"]['my_project_settings']
@@ -9,10 +10,11 @@ fb_credentials_dict = dict(fb_credentials)
 print(type(fb_credentials_dict))
 
 if not firebase_admin._apps:
+    # key = json.loads(fb_credentials)
     cred = firebase_admin.credentials.Certificate(fb_credentials_dict)
     firebase_admin.initialize_app(cred)
 
-@st.cache_resource
+@st.experimental_singleton
 def get_db():
     db = firebase_admin.firestore.client()
     return db

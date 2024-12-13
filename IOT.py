@@ -12,7 +12,7 @@ from google.cloud import firestore
 import json
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
-db = firestore.Client(credentials=creds, project="iot-final-project-b1550")
+db = firestore.Client(credentials=creds)
 
 
 # db = firestore.Client.from_service_account_json(fb_credentials_dict)

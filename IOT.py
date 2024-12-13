@@ -9,13 +9,12 @@ import streamlit as st
 from google.cloud import firestore
 
 # Authenticate to Firestore with the JSON account key.
-# import json
-# key_dict = json.loads(st.secrets["textkey"])
-# creds = service_account.Credentials.from_service_account_info(key_dict)
-# db = firestore.Client(credentials=creds)
+key_dict = json.loads(st.secrets["textkey"])
+creds = service_account.Credentials.from_service_account_info(key_dict)
+db = firestore.Client(credentials=creds)
 
 
-db = firestore.Client.from_service_account_json('./key.json')
+# db = firestore.Client.from_service_account_json('./key.json')
 
 if st.button("Refresh Now"):
     st.rerun()

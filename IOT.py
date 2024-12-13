@@ -2,29 +2,17 @@ import firebase_admin.firestore
 import streamlit as st
 from google.cloud import firestore
 import json
+from google.oauth2 import service_account
+
+
+import streamlit as st
+from google.cloud import firestore
 
 # Authenticate to Firestore with the JSON account key.
-fb_credentials = st.secrets["firebase"]['my_project_settings']
-print(fb_credentials)
-fb_credentials_dict = dict(fb_credentials)
-print(type(fb_credentials_dict))
-
-# if not firebase_admin._apps:
-#     # key = json.loads(fb_credentials)
-#     cred = firebase_admin.credentials.Certificate(fb_credentials_dict)
-#     firebase_admin.initialize_app(cred)
-
-@st.cache_resource
-def get_db():
-    key = json.loads(fb_credentials_dict)
-    cred = firebase_admin.credentials.Certificate(key)
-    try:
-        firebase_admin.get_app()
-    except ValueError:
-        firebase_admin.initialize_app(cred)
-        
-    db = firebase_admin.firestore.client()
-    return db
+import json
+key_dict = json.loads(st.secrets["textkey"])
+creds = service_account.Credentials.from_service_account_info(key_dict)
+db = firestore.Client(credentials=creds, project="iot-final-project-b1550")
 
 
 # db = firestore.Client.from_service_account_json(fb_credentials_dict)
@@ -46,7 +34,6 @@ if st.button("Refresh Now"):
 #         "Package No.1": 1,
 #     })
 
-db = get_db()
 
 # Create a reference to the Google post.
 doc_ref = db.collection("IOT").document("PackageName")

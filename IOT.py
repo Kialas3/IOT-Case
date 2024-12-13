@@ -51,4 +51,4 @@ def get_df(doc_dict):
 
 df = get_df(doc_dict)
 
-st.table(df)
+mytabel = st.table(df)

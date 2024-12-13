@@ -42,11 +42,11 @@ doc_ref = db.collection("IOT").document("PackageName")
 doc = doc_ref.get()
 doc_dict = doc.to_dict()
 
-@st.cache_data
+# @st.cache_data
 def get_df(doc_dict):
     df = pd.DataFrame(list(doc_dict.items()), columns=["Package NO.", "Number"])
-    df.columns = df.iloc[0]
-    df = df[1:]
+    # df.columns = df.iloc[0]
+    # df = df[1:]
     return df
 
 df = get_df(doc_dict)

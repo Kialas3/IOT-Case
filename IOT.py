@@ -1,9 +1,9 @@
-import firebase_admin.firestore
 import streamlit as st
 from google.cloud import firestore
 import json
 from google.oauth2 import service_account
 
+import pandas as pd
 
 import streamlit as st
 from google.cloud import firestore
@@ -24,14 +24,15 @@ if st.button("Refresh Now"):
 #     # Create a reference to the Google post.
 #     doc_ref = db.collection("IOT").document("PackageName")
 #     doc_ref.delete()
-    
-# # add button
+
+# dict_data = {'Package NO.': 'Number',
+#              "No.1": 5}
+
+# add button
 # if st.button("Add"):
 #     # Create a reference to the Google post.
 #     doc_ref = db.collection("IOT").document("PackageName")
-#     doc_ref.set({
-#         "Package No.1": 1,
-#     })
+#     doc_ref.set(dict_data)
 
 
 # Create a reference to the Google post.
@@ -39,7 +40,15 @@ doc_ref = db.collection("IOT").document("PackageName")
 
 # Then get the data at that reference.
 doc = doc_ref.get()
+doc_dict = doc.to_dict()
 
-# Let's see what we got!
-st.write("The id is: ", doc.id)
-st.write("The contents are: ", doc.to_dict())
+@st.cache_data
+def get_df(doc_dict):
+    df = pd.DataFrame(list(doc_dict.items()), columns=["Package NO.", "Number"])
+    df.columns = df.iloc[0]
+    df = df[1:]
+    return df
+
+df = get_df(doc_dict)
+
+st.table(df)
